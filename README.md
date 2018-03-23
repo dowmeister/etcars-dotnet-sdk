@@ -4,6 +4,8 @@
 
 It connects to ETCars socket and provide fully tipized data via event handlers.
 
+Uses [ManagedSockets](https://github.com/umby24/ManagedSockets) to receive data from ETCars socket.
+
 ## Usage
 
 ```
