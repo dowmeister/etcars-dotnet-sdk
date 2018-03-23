@@ -14,9 +14,22 @@ namespace ETCarsDotNetSdk
     /// </summary>
     public class ETCarsClient
     {
-        List<string> dataPoints = new List<string>();
+        private List<string> dataPoints = new List<string>();
+        private ClientSocket client = null;
+
+        public bool IsConnected
+        {
+            get
+            {
+                return client == null ? false : client.IsConnected;
+            }
+        }
 
         public event ETCarsDataReceivedEventArgs DataReceived;
+
+        public event ETCarsDisconnectedEventArgs Disconnected;
+
+        public event ETCarsConnectedEventArgs Connected;
 
         /// <summary>
         /// 
@@ -35,7 +48,7 @@ namespace ETCarsDotNetSdk
         {
             try
             {
-                ClientSocket client = new ClientSocket();
+                client = new ClientSocket();
                 client.DataReceived += Client_DataReceived;
                 client.Disconnected += Client_Disconnected;
                 client.Connected += Client_Connected;
@@ -53,7 +66,7 @@ namespace ETCarsDotNetSdk
         /// <param name="args"></param>
         private void Client_Connected(Sockets.EventArgs.SocketConnectedArgs args)
         {
-
+            Connected?.Invoke();
         }
 
         /// <summary>
@@ -62,7 +75,7 @@ namespace ETCarsDotNetSdk
         /// <param name="args"></param>
         private void Client_Disconnected(Sockets.EventArgs.SocketDisconnectedArgs args)
         {
-
+            Disconnected?.Invoke();
         }
 
         /// <summary>
