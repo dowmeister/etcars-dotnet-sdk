@@ -9,6 +9,9 @@ Uses [ManagedSockets](https://github.com/umby24/ManagedSockets) to receive data 
 ## Usage
 
 ```
+using ETCarsDotNetSdk;
+using ETCarsDotNetSdk.Events;
+
 ETCarsClient client = new ETCarsClient();
 client.DataReceived += client_DataReceived;
 client.Connect();
