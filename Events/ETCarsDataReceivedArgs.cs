@@ -17,7 +17,7 @@ namespace ETCarsDotNetSdk.Events
         /// <summary>
         /// 
         /// </summary>
-        public object Data { get; set; }
+        public ETCarsData Data { get; set; }
 
         /// <summary>
         /// 
