@@ -88,20 +88,39 @@ namespace ETCarsDotNetSdk
 
             if (dataPoints.Count == 0)
             {
-                string startingData = data.Substring(data.IndexOf("{"));
-                dataPoints.Add(startingData);
+                if (data.Contains("{"))
+                {
+                    string startingData = data.Substring(data.IndexOf("{"));
+                    dataPoints.Add(startingData);
+                }
+                else
+                {
+                    return;
+                }
             }
             else
+            {
                 dataPoints.Add(data);
+            }
 
             if (data.Contains("\r"))
             {
                 string json = String.Join("", dataPoints.ToArray());
                 dataPoints.Clear();
+                
+                int index = json.IndexOf("\r");
+                json = json.Substring(-, index);
+                
+                try
+                {
+                    ETCarsDataContainer deserializedData = JsonConvert.DeserializeObject<ETCarsDataContainer>(json);
 
-                ETCarsDataContainer deserializedData = JsonConvert.DeserializeObject<ETCarsDataContainer>(json);
-
-                DataReceived?.Invoke(new ETCarsDataReceivedArgs(json, deserializedData.data));
+                    DataReceived?.Invoke(new ETCarsDataReceivedArgs(json, deserializedData.data));
+                }
+                catch
+                {
+                    return;
+                }
             }
         }
 
