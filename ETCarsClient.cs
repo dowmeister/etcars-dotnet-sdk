@@ -31,6 +31,8 @@ namespace ETCarsDotNetSdk
 
         public event ETCarsConnectedEventArgs Connected;
 
+        public event ETCarsConnectionFailedEventArgs Errored;
+
         /// <summary>
         /// 
         /// </summary>
@@ -56,7 +58,7 @@ namespace ETCarsDotNetSdk
             }
             catch (Exception ex)
             {
-
+                Client_Errored(ex);
             }
         }
 
@@ -67,6 +69,14 @@ namespace ETCarsDotNetSdk
         private void Client_Connected(Sockets.EventArgs.SocketConnectedArgs args)
         {
             Connected?.Invoke();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exception"></param>
+        private void Client_Errored(Exception exception) {
+            Errored?.Invoke(new ETCarsConnectionFailedArgs(exception));
         }
 
         /// <summary>
