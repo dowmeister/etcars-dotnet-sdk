@@ -109,7 +109,7 @@ namespace ETCarsDotNetSdk
                 dataPoints.Clear();
                 
                 int index = json.IndexOf("\r");
-                json = json.Substring(-, index);
+                json = json.Substring(0, index);
                 
                 try
                 {
